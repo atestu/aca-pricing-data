@@ -1,4 +1,4 @@
-# Affordable Care Act Prices
+# "Affordable Care Act" Health Insurance Plans Data
 
 The goal of this project is to increase pricing transparency in ACA health insurance plans (also known as Obamacare plans).
 

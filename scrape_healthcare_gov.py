@@ -47,7 +47,7 @@ class ScrapeHealthcareGov():
 				except IOError:
 					self.grab_plans(fips, year, plan_type)
 		else:
-			time.sleep(1)
+			time.sleep(.33) # don't hammer the government website
 			(plan_type_name, people) = plan_type
 			api_request = requests.post(f"https://marketplace-int.api.healthcare.gov/api/v1/plans/search", json={"household":{"income":-1,"people":people,"has_married_couple":(len(people) > 1)},"market":"Individual","place":{"countyfips":fips['fips'],"state":fips['state'],"zipcode":fips['zipcode']},"year":year,"filter":{"division":"HealthCare"},"limit":10,"offset":offset,"order":"asc","suppressed_plan_ids":[],"sort":"premium","aptc_override":None})
 			plans_json = api_request.json()
