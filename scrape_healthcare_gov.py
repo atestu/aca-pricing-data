@@ -29,11 +29,13 @@ class ScrapeHealthcareGov():
 		if fips is None:
 			for f in self.fips:
 				self.grab_plans(fips=f, offset=0)
+			return
 		if year is None:
 			for year in self.years:
 				if not os.path.isdir(f"data/output/{year}"):
 					os.mkdir(f"data/output/{year}")
 				self.grab_plans(fips, year)
+			return
 		if plan_type is None:
 			for plan_type in [
 					('individual',	[{"age":27}]),
@@ -48,6 +50,7 @@ class ScrapeHealthcareGov():
 					f.close()
 				except IOError:
 					self.grab_plans(fips, year, plan_type)
+			return
 		else:
 			time.sleep(.33) # don't hammer the government website
 			(plan_type_name, people) = plan_type
