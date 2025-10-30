@@ -6,16 +6,18 @@ from datetime import date
 from dateutil import relativedelta
 
 class ScrapeHealthcareGov():
-	def __init__(self, fips=[], years=[]):
+	def __init__(self, fips=[], years=[], states=[]):
+		# Default states: those using federally-run marketplace (healthcare.gov) as of 2025
+		# Note: VA and GA moved to state-run exchanges (VA in early 2025, GA Access launched Nov 2024)
+		self.states = states if len(states) > 0 else ['MT','WY','UT','AZ','AK','TX','OK','KS','NE','SD','ND','WI','MO','LA','MS','AL','TN','IN','OH','FL','SC','NC','HI']
+
 		self.fips = fips
 		if len(self.fips) == 0:
 			with open('data/input/zip2fips.json') as fips_zips_json:
 				fips_zips = json.load(fips_zips_json)
 				for (zipcode, fips_details) in fips_zips.items():
 					# only scrape states that use the federally-run marketplace (healthcare.gov)
-					# States using federally-run marketplace (healthcare.gov) as of 2025
-					# Note: VA and GA moved to state-run exchanges (VA in early 2025, GA Access launched Nov 2024)
-					if fips_details['state'] in ['MT','WY','UT','AZ','AK','TX','OK','KS','NE','SD','ND','WI','MO','LA','MS','AL','TN','IN','OH','FL','SC','NC','HI']:
+					if fips_details['state'] in self.states:
 						fips_details['zipcode'] = zipcode
 						self.fips.append(fips_details)
 
