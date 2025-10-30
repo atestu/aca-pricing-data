@@ -8,7 +8,7 @@ from dateutil import relativedelta
 class ScrapeHealthcareGov():
 	def __init__(self, fips=[], years=[], states=[]):
 		# Default states: those using federally-run marketplace (healthcare.gov) as of 2025
-		# Note: VA and GA moved to state-run exchanges (VA in early 2025, GA Access launched Nov 2024)
+		# Note: VA and GA moved to state-run exchanges (VA before 2024 enrollment, GA Access launched Nov 2024)
 		self.states = states if len(states) > 0 else ['MT','WY','UT','AZ','AK','TX','OK','KS','NE','SD','ND','WI','MO','LA','MS','AL','TN','IN','OH','FL','SC','NC','HI']
 
 		self.fips = fips

@@ -4,7 +4,7 @@ The goal of this project is to increase pricing transparency in ACA health insur
 
 This project scrapes health plan information from the healthcare.gov API (federally-run marketplace only, not state-run exchanges). As of 2025, this includes: MT, WY, UT, AZ, AK, TX, OK, KS, NE, SD, ND, WI, MO, LA, MS, AL, TN, IN, OH, FL, SC, NC, HI.
 
-**Note**: Virginia and Georgia moved to state-run exchanges and are no longer included (VA transitioned in early 2025, GA Access launched November 2024).
+**Note**: Virginia and Georgia moved to state-run exchanges and are no longer included (VA transitioned before 2024 enrollment, GA Access launched November 2024). Historical data for VA (2022-2023) and GA (2022-2024) is included.
 
 ## Getting the Data
 
