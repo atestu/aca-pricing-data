@@ -2,21 +2,72 @@
 
 The goal of this project is to increase pricing transparency in ACA health insurance plans (also known as Obamacare plans).
 
-The project currently scrapes healthcare plan information from the healthcare.gov website, so we don't have prices from state-run exchanges.
+This project scrapes health plan information from the healthcare.gov API (federally-run marketplace only, not state-run exchanges). As of 2025, this includes: MT, WY, UT, AZ, AK, TX, OK, KS, NE, SD, ND, WI, MO, LA, MS, AL, GA, TN, IN, OH, FL, SC, NC, HI.
 
-The data can be found under `data/output/[year]/[plan_type]/[fips].json` (more on FIPS below)
+## Getting the Data
 
-## Run it yourself
+### Option 1: SQLite Database (Recommended)
 
-First run `make setup` (to install the python3 packages, found in [requirements.txt](requirements.txt)), then `make run`.
+The easiest way to analyze the data is using the SQLite database included in this repository:
 
-It will take a long time since there is a 1 second waiting time in between each scrape (we don't want to make the website crash [again](https://en.wikipedia.org/wiki/HealthCare.gov#Issues_during_launch))
+```bash
+git clone https://github.com/atestu/aca-pricing-data.git
+cd aca-pricing-data
+sqlite3 data/plans.db
+```
 
-## More info
+Example queries:
+```sql
+-- Average premiums by state for Bronze plans
+SELECT state, household_type, AVG(premium) as avg_premium
+FROM plans
+WHERE year = 2025 AND metal_level = 'Bronze'
+GROUP BY state, household_type;
+
+-- Compare insurance companies across states
+SELECT p.state, AVG(p.premium) as avg_premium
+FROM plans p
+JOIN issuers i ON p.issuer_id = i.id
+WHERE i.name LIKE '%Blue%' AND p.year = 2025
+GROUP BY p.state;
+```
+
+### Option 2: Raw JSON Data
+
+Download compressed archives from [GitHub Releases](https://github.com/atestu/aca-pricing-data/releases):
+- 2025 plans: See latest release
+- Additional years: Check releases page
+
+File structure: `data/output/[year]/[plan_type]/[fips].json`
+
+### Option 3: Run the Scraper Yourself
+
+First run `make setup` (to install Python packages), then `make run`.
+
+**Warning**: This takes ~20 hours due to rate limiting (0.33s between requests to avoid overloading healthcare.gov)
+
+## Database Schema
+
+The SQLite database contains the following tables:
+
+- **plans**: Main table with plan details (premium, metal level, type, etc.)
+- **issuers**: Insurance companies (name, contact info, state)
+- **counties**: FIPS code to county name mapping
+- **deductibles**: Plan deductibles (individual, family, network tiers)
+- **moops**: Maximum out-of-pocket costs
+
+To rebuild or import data into the database:
+```bash
+python3 create_database.py          # Creates schema
+python3 import_to_sqlite.py         # Imports all years
+python3 import_to_sqlite.py --year 2025  # Import specific year
+```
+
+## More Info
 
 The [FIPS code](https://en.wikipedia.org/wiki/FIPS_county_code) represents counties of the US. You can look up counties by zip code in data/input/zip2fips.json to find the ones you're interested in (there can be multiple counties in one zip code).
 
-This project collects data in a machine-readable format. There is a separate project for the website which uses this data to display information about health plans in an easy to digest format for humans (coming soon).
+**Website**: This project collects data in a machine-readable format. There is a companion website project that displays the data in a human-friendly interface: [aca-prices-website](https://github.com/atestu/aca-prices-website)
 
 ## Thanks
 

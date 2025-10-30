@@ -1,2 +1,9 @@
 .DS_Store
 __pycache__/
+
+# Ignore raw JSON data (too large for git - use GitHub Releases)
+data/output/
+
+# SQLite database (distribute via GitHub Releases - exceeds 100MB limit)
+*.db
+*.db-journal
