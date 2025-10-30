@@ -14,8 +14,8 @@ class ScrapeHealthcareGov():
 				for (zipcode, fips_details) in fips_zips.items():
 					# only scrape states that use the federally-run marketplace (healthcare.gov)
 					# States using federally-run marketplace (healthcare.gov) as of 2025
-					# Note: VA moved to state-run exchange
-					if fips_details['state'] in ['MT','WY','UT','AZ','AK','TX','OK','KS','NE','SD','ND','WI','MO','LA','MS','AL','GA','TN','IN','OH','FL','SC','NC','HI']:
+					# Note: VA and GA moved to state-run exchanges (VA in early 2025, GA Access launched Nov 2024)
+					if fips_details['state'] in ['MT','WY','UT','AZ','AK','TX','OK','KS','NE','SD','ND','WI','MO','LA','MS','AL','TN','IN','OH','FL','SC','NC','HI']:
 						fips_details['zipcode'] = zipcode
 						self.fips.append(fips_details)
 

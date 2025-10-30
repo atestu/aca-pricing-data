@@ -36,7 +36,7 @@ python3 main.py
 
 The `ScrapeHealthcareGov` class uses recursive iteration to scrape data:
 
-1. **FIPS initialization**: If no FIPS codes provided, loads from `data/input/zip2fips.json` and filters for states using the federally-run marketplace (healthcare.gov). Hardcoded list includes MT, WY, UT, AZ, AK, TX, OK, KS, NE, SD, ND, WI, MO, LA, MS, AL, GA, TN, IN, OH, FL, SC, NC, HI. **Note**: VA was removed as of 2025 after moving to a state-run exchange.
+1. **FIPS initialization**: If no FIPS codes provided, loads from `data/input/zip2fips.json` and filters for states using the federally-run marketplace (healthcare.gov). Hardcoded list includes MT, WY, UT, AZ, AK, TX, OK, KS, NE, SD, ND, WI, MO, LA, MS, AL, TN, IN, OH, FL, SC, NC, HI (23 states). **Note**: VA and GA were removed as of 2025 after moving to state-run exchanges (VA in early 2025, GA Access launched November 2024).
 
 2. **Years initialization**: Automatically determines enrollment years from 2016 to current enrollment year (calculated as current date + 2 months).
 
