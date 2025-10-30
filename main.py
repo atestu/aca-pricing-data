@@ -2,7 +2,8 @@
 from scrape_healthcare_gov import ScrapeHealthcareGov
 
 def main():
-	scrape = ScrapeHealthcareGov()
+	# Test with 2025 only
+	scrape = ScrapeHealthcareGov(years=[2025])
 	scrape.grab_plans()
 
 if __name__ == '__main__':
